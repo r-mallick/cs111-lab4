@@ -198,22 +198,22 @@ void write_superblock(int fd) {
 
 	// TODO It's all yours
 	// TODO finish the superblock number setting
-	superblock.s_inodes_count = -1;
-	superblock.s_blocks_count = -1;
+	superblock.s_inodes_count = 128;
+	superblock.s_blocks_count = 1024;
 	superblock.s_r_blocks_count = 0;
-	superblock.s_free_blocks_count = -1;
-	superblock.s_free_inodes_count = -1;
-	superblock.s_first_data_block = -1; /* First Data Block */
-	superblock.s_log_block_size = 0;					/* 1024 */
-	superblock.s_log_frag_size = 0;						/* 1024 */
-	superblock.s_blocks_per_group = -1;
-	superblock.s_frags_per_group = -1;
-	superblock.s_inodes_per_group = -1;
+	superblock.s_free_blocks_count = 1000;
+	superblock.s_free_inodes_count = 124;
+	superblock.s_first_data_block = 1; /* First Data Block */
+	superblock.s_log_block_size = 1024;					/* 1024 */
+	superblock.s_log_frag_size = 1024;						/* 1024 */
+	superblock.s_blocks_per_group = 8192;
+	superblock.s_frags_per_group = 8192;
+	superblock.s_inodes_per_group = 128;
 	superblock.s_mtime = 0;				/* Mount time */
 	superblock.s_wtime = current_time;	/* Write time */
 	superblock.s_mnt_count         = 0; /* Number of times mounted so far */
 	superblock.s_max_mnt_count     = 0; /* Make this unlimited */
-	superblock.s_magic = -1; /* ext2 Signature */
+	superblock.s_magic = 0xEF53; /* ext2 Signature */
 	superblock.s_state             = 0; /* File system is clean */
 	superblock.s_errors            = 0; /* Ignore the error (continue on) */
 	superblock.s_minor_rev_level   = 0; /* Leave this as 0 */
