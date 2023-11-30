@@ -293,7 +293,7 @@ void write_block_bitmap(int fd)
 	for (int i = 0; i < BLOCK_SIZE; i++) {
 		if (i == 3) {
 			map_value[i] = 0xfe;
-		} else (i < 3) {
+		} else {
 			map_value[i] = 0xff;
 		}
 	}
