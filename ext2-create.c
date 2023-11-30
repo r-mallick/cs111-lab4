@@ -291,7 +291,7 @@ void write_block_bitmap(int fd)
 	u8 map_value[BLOCK_SIZE];
 
 	for (int i = 0; i < BLOCK_SIZE; i++) {
-		if (i == 3) {
+		if (i == 2) {
 			map_value[i] = 0xfe;
 		} else {
 			map_value[i] = 0xff;
