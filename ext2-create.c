@@ -288,24 +288,15 @@ void write_block_bitmap(int fd)
 	}
 
 	// TODO It's all yours
-	// Calculate the number of blocks from 0 to 1023
-    int num_blocks = 1024;
+	u8 map_value[BLOCK_SIZE];
 
-    // Calculate the number of bytes needed to represent the blocks
-    int num_bytes = (num_blocks + 7) / 8;
-
-    // Initialize the map_value array
-    u8 map_value[num_bytes];
-    memset(map_value, 0xFF, num_bytes);  // Set all bits to 1 initially
-
-    // Mark blocks 24 to 1023 as free by setting the corresponding bits to 0
-    for (int i = 24; i <= 1023; ++i)
-    {
-        int byte_offset = i / 8;
-        int bit_offset = i % 8;
-        map_value[byte_offset] &= ~(1 << bit_offset);
-    }
-
+	for (int i = 0; i < BLOCK_SIZE) {
+		if (i == 0) {
+			map_value[i] = 0x00;
+		} else {
+			map_value[i] = 0xff;
+		}
+	}
 	if (write(fd, map_value, BLOCK_SIZE) != BLOCK_SIZE)
 	{
 		errno_exit("write");
