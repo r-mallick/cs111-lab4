@@ -319,8 +319,8 @@ void write_inode_bitmap(int fd)
 	u8 map_value[BLOCK_SIZE];
 	for (int i = 0; i < BLOCK_SIZE; i++) {
 		if (i == 1) {
-			map_value[i] = 1F;
-		} else if (i > 1 && <= 15) {
+			map_value[i] = 1f;
+		} else if (i > 1 && i <= 15) {
 			map_value[i] = 0x00;
 		} else {
 			map_value[i] = 0xff;
