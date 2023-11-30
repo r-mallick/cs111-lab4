@@ -20,6 +20,7 @@ typedef int32_t i32;
 #define NUM_BLOCKS 1024
 #define NUM_INODES 128
 
+#define ROOT_DIR_INO       2
 #define LOST_AND_FOUND_INO 11
 #define HELLO_WORLD_INO    12
 #define HELLO_INO          13
@@ -373,6 +374,66 @@ void write_inode_table(int fd) {
 
 	// TODO It's all yours
 	// TODO finish the inode entries for the other files
+	
+	// inode for root directory
+	struct ext2_inode root_inode = {0};
+	root_inode.i_mode = EXT2_S_IFDIR
+	                              | EXT2_S_IRUSR
+	                              | EXT2_S_IWUSR
+	                              | EXT2_S_IXUSR
+	                              | EXT2_S_IRGRP
+	                              | EXT2_S_IXGRP
+	                              | EXT2_S_IROTH
+	                              | EXT2_S_IXOTH;
+	root_inode.i_uid = 0;
+	root_inode.i_size = 1024;
+	root_inode.i_atime = current_time;
+	root_inode.i_ctime = current_time;
+	root_inode.i_mtime = current_time;
+	root_inode.i_dtime = 0;
+	root_inode.i_gid = 0;
+	root_inode.i_links_count = 3;
+	root_inode.i_blocks = 2; /* These are oddly 512 blocks */
+	root_inode.i_block[0] = ROOT_DIR_BLOCKNO;
+	write_inode(fd, ROOT_DIR_INO, &root_inode);
+
+	// inode for hello-world file
+	struct ext2_inode hello_world_inode = {0};
+	hello_world_inode.i_mode = EXT2_S_IFREG
+	                              | EXT2_S_IRUSR
+	                              | EXT2_S_IWUSR
+	                              | EXT2_S_IRGRP
+	                              | EXT2_S_IROTH
+	hello_world_inode.i_uid = 1000;
+	hello_world_inode.i_size = 12;
+	hello_world_inode.i_atime = current_time;
+	hello_world_inode.i_ctime = current_time;
+	hello_world_inode.i_mtime = current_time;
+	hello_world_inode.i_dtime = 0;
+	hello_world_inode.i_gid = 1000;
+	hello_world_inode.i_links_count = 1;
+	hello_world_inode.i_blocks = 1; /* These are oddly 512 blocks */
+	hello_world_inode.i_block[0] = HELLO_WORLD_FILE_BLOCKNO;
+	write_inode(fd, HELLO_WORLD_INO, &hello_world_inode);
+
+	// inode for hello symbolic link
+	struct ext2_inode hello_sym_link_inode = {0};
+	hello_sym_link_inode.i_mode = EXT2_S_IFREG
+	                              | EXT2_S_IRUSR
+	                              | EXT2_S_IWUSR
+	                              | EXT2_S_IRGRP
+	                              | EXT2_S_IROTH
+	hello_sym_link_inode.i_uid = 1000;
+	hello_sym_link_inode.i_size = 11;
+	hello_sym_link_inode.i_atime = current_time;
+	hello_sym_link_inode.i_ctime = current_time;
+	hello_sym_link_inode.i_mtime = current_time;
+	hello_sym_link_inode.i_dtime = 0;
+	hello_sym_link_inode.i_gid = 1000;
+	hello_sym_link_inode.i_links_count = 1;
+	hello_sym_link_inode.i_blocks = 1; /* These are oddly 512 blocks */
+	hello_sym_link_inode.i_block[0] = 20;
+	write_inode(fd, HELLO_INO, &root_inode);
 }
 
 void write_root_dir_block(int fd)
