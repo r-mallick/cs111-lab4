@@ -403,7 +403,7 @@ void write_inode_table(int fd) {
 	                              | EXT2_S_IRUSR
 	                              | EXT2_S_IWUSR
 	                              | EXT2_S_IRGRP
-	                              | EXT2_S_IROTH
+	                              | EXT2_S_IROTH;
 	hello_world_inode.i_uid = 1000;
 	hello_world_inode.i_size = 12;
 	hello_world_inode.i_atime = current_time;
@@ -422,7 +422,7 @@ void write_inode_table(int fd) {
 	                              | EXT2_S_IRUSR
 	                              | EXT2_S_IWUSR
 	                              | EXT2_S_IRGRP
-	                              | EXT2_S_IROTH
+	                              | EXT2_S_IROTH;
 	hello_sym_link_inode.i_uid = 1000;
 	hello_sym_link_inode.i_size = 11;
 	hello_sym_link_inode.i_atime = current_time;
