@@ -291,10 +291,10 @@ void write_block_bitmap(int fd)
 	u8 map_value[BLOCK_SIZE];
 
 	for (int i = 0; i < BLOCK_SIZE; i++) {
-		if (i <= 2 || i >= 8) {
-			map_value[i] = 0xff;
-		} else {
+		if (i == 0) {
 			map_value[i] = 0x00;
+		} else {
+			map_value[i] = 0xff;
 		}
 	}
 	if (write(fd, map_value, BLOCK_SIZE) != BLOCK_SIZE)
