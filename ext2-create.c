@@ -433,7 +433,7 @@ void write_inode_table(int fd) {
 	hello_sym_link_inode.i_links_count = 1;
 	hello_sym_link_inode.i_blocks = 1; /* These are oddly 512 blocks */
 	hello_sym_link_inode.i_block[0] = 20;
-	write_inode(fd, HELLO_INO, &root_inode);
+	write_inode(fd, HELLO_INO, &hello_sym_link_inode);
 }
 
 void write_root_dir_block(int fd)
