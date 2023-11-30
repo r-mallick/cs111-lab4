@@ -211,9 +211,9 @@ void write_superblock(int fd) {
 	superblock.s_first_data_block = SUPERBLOCK_BLOCKNO; /* First Data Block */
 	superblock.s_log_block_size = 0;					/* 1024 */
 	superblock.s_log_frag_size = 0;						/* 1024 */
-	superblock.s_blocks_per_group = 8192;
-	superblock.s_frags_per_group = 8192;
-	superblock.s_inodes_per_group = 128;
+	superblock.s_blocks_per_group = NUM_BLOCKS_PER_GROUP;
+	superblock.s_frags_per_group = NUM_FRAGS_PER_GROUP;
+	superblock.s_inodes_per_group = NUM_INODES_PER_GROUP;
 	superblock.s_mtime = 0;				/* Mount time */
 	superblock.s_wtime = current_time;	/* Write time */
 	superblock.s_mnt_count         = 0; /* Number of times mounted so far */
@@ -271,7 +271,7 @@ void write_block_group_descriptor_table(int fd) {
 	block_group_descriptor.bg_inode_table = -1;
 	block_group_descriptor.bg_free_blocks_count = -1;
 	block_group_descriptor.bg_free_inodes_count = -1;
-	block_group_descriptor.bg_used_dirs_count = -1;
+	block_group_descriptor.bg_used_dirs_count = 2;
 
 	ssize_t size = sizeof(block_group_descriptor);
 	if (write(fd, &block_group_descriptor, size) != size) {
