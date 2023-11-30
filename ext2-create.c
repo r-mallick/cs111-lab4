@@ -295,7 +295,6 @@ void write_block_bitmap(int fd)
 			map_value[i] = 0xfe;
 		} else if (i < 3) {
 			map_value[i] = 0xff
-		}
 		} else {
 			map_value[i] = 0x00;
 		}
