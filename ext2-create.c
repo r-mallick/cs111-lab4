@@ -379,7 +379,7 @@ void write_inode_table(int fd) {
 	// TODO finish the inode entries for the other files
 	
 	// inode for root directory
-	
+	/*
 	struct ext2_inode root_inode = {0};
 	root_inode.i_mode = EXT2_S_IFDIR
 	                              | EXT2_S_IRUSR
@@ -397,10 +397,10 @@ void write_inode_table(int fd) {
 	root_inode.i_dtime = 0;
 	root_inode.i_gid = 0;
 	root_inode.i_links_count = 3;
-	root_inode.i_blocks = 2; /* These are oddly 512 blocks */
+	root_inode.i_blocks = 2; /* These are oddly 512 blocks 
 	root_inode.i_block[0] = ROOT_DIR_BLOCKNO;
 	write_inode(fd, 2, &root_inode);
-	
+	*/
 	
 }
 
