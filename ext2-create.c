@@ -435,7 +435,17 @@ void write_inode_table(int fd) {
 	hello_sym_link_inode.i_gid = 1000;
 	hello_sym_link_inode.i_links_count = 1;
 	hello_sym_link_inode.i_blocks = 0; /* These are oddly 512 blocks */
-	hello_sym_link_inode.i_block = "hello-world";
+	hello_sym_link_inode.i_block[0] = "h";
+	hello_sym_link_inode.i_block[1] = "e";
+	hello_sym_link_inode.i_block[2] = "l";
+	hello_sym_link_inode.i_block[3] = "l";
+	hello_sym_link_inode.i_block[4] = "o";
+	hello_sym_link_inode.i_block[5] = "-";
+	hello_sym_link_inode.i_block[6] = "w";
+	hello_sym_link_inode.i_block[7] = "o";
+	hello_sym_link_inode.i_block[8] = "r";
+	hello_sym_link_inode.i_block[9] = "l";
+	hello_sym_link_inode.i_block[10] = "d";
 	write_inode(fd, HELLO_INO, &hello_sym_link_inode);
 
 }
