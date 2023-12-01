@@ -376,6 +376,7 @@ void write_inode_table(int fd) {
 	// TODO finish the inode entries for the other files
 	
 	
+	
 }
 
 void write_root_dir_block(int fd)
