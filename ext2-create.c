@@ -267,12 +267,12 @@ void write_block_group_descriptor_table(int fd) {
 
 	// TODO It's all yours
 	// TODO finish the block group descriptor number setting
-	block_group_descriptor.bg_block_bitmap = -1;
-	block_group_descriptor.bg_inode_bitmap = -1;
-	block_group_descriptor.bg_inode_table = -1;
-	block_group_descriptor.bg_free_blocks_count = -1;
-	block_group_descriptor.bg_free_inodes_count = -1;
-	block_group_descriptor.bg_used_dirs_count = -1;
+	block_group_descriptor.bg_block_bitmap = BLOCK_BITMAP_BLOCKNO;
+	block_group_descriptor.bg_inode_bitmap = INODE_BITMAP_BLOCKNO;
+	block_group_descriptor.bg_inode_table = INODE_TABLE_BLOCKNO;
+	block_group_descriptor.bg_free_blocks_count = NUM_FREE_BLOCKS;
+	block_group_descriptor.bg_free_inodes_count = NUM_FREE_INODES;
+	block_group_descriptor.bg_used_dirs_count = 2;
 
 	ssize_t size = sizeof(block_group_descriptor);
 	if (write(fd, &block_group_descriptor, size) != size) {
@@ -290,7 +290,7 @@ void write_block_bitmap(int fd)
 
 	// TODO It's all yours
 	u8 map_value[BLOCK_SIZE];
-	/*
+	
 	for (int i = 0; i < BLOCK_SIZE; i++) {
 		if (i == 2) {
 			map_value[i] = 0x7f;
@@ -302,7 +302,7 @@ void write_block_bitmap(int fd)
 			map_value[i] = 0xff;
 		}
 	}
-	*/
+	
 	if (write(fd, map_value, BLOCK_SIZE) != BLOCK_SIZE)
 	{
 		errno_exit("write");
@@ -319,7 +319,7 @@ void write_inode_bitmap(int fd)
 
 	// TODO It's all yours
 	u8 map_value[BLOCK_SIZE];
-	/*
+	
 	for (int i = 0; i < BLOCK_SIZE; i++) {
 		if (i == 1) {
 			map_value[i] = 0x1f;
@@ -329,7 +329,7 @@ void write_inode_bitmap(int fd)
 			map_value[i] = 0xff;
 		}
 	}
-	*/
+	
 
 	if (write(fd, map_value, BLOCK_SIZE) != BLOCK_SIZE)
 	{
@@ -378,7 +378,65 @@ void write_inode_table(int fd) {
 	// TODO It's all yours
 	// TODO finish the inode entries for the other files
 	
-	
+	// inode for root directory
+	struct ext2_inode root_inode = {0};
+	root_inode.i_mode = EXT2_S_IFDIR
+	                              | EXT2_S_IRUSR
+	                              | EXT2_S_IWUSR
+	                              | EXT2_S_IXUSR
+	                              | EXT2_S_IRGRP
+	                              | EXT2_S_IXGRP
+	                              | EXT2_S_IROTH
+	                              | EXT2_S_IXOTH;
+	root_inode.i_uid = 0;
+	root_inode.i_size = 1024;
+	root_inode.i_atime = current_time;
+	root_inode.i_ctime = current_time;
+	root_inode.i_mtime = current_time;
+	root_inode.i_dtime = 0;
+	root_inode.i_gid = 0;
+	root_inode.i_links_count = 3;
+	root_inode.i_blocks = 2; /* These are oddly 512 blocks */
+	root_inode.i_block[0] = ROOT_DIR_BLOCKNO;
+	write_inode(fd, ROOT_DIR_INO, &root_inode);
+
+	// inode for hello-world file
+	struct ext2_inode hello_world_inode = {0};
+	hello_world_inode.i_mode = EXT2_S_IFREG
+	                              | EXT2_S_IRUSR
+	                              | EXT2_S_IWUSR
+	                              | EXT2_S_IRGRP
+	                              | EXT2_S_IROTH;
+	hello_world_inode.i_uid = 1000;
+	hello_world_inode.i_size = 12;
+	hello_world_inode.i_atime = current_time;
+	hello_world_inode.i_ctime = current_time;
+	hello_world_inode.i_mtime = current_time;
+	hello_world_inode.i_dtime = 0;
+	hello_world_inode.i_gid = 1000;
+	hello_world_inode.i_links_count = 1;
+	hello_world_inode.i_blocks = 1; /* These are oddly 512 blocks */
+	hello_world_inode.i_block[0] = HELLO_WORLD_FILE_BLOCKNO;
+	write_inode(fd, HELLO_WORLD_INO, &hello_world_inode);
+
+	// inode for hello symbolic link
+	struct ext2_inode hello_sym_link_inode = {0};
+	hello_sym_link_inode.i_mode = EXT2_S_IFREG
+	                              | EXT2_S_IRUSR
+	                              | EXT2_S_IWUSR
+	                              | EXT2_S_IRGRP
+	                              | EXT2_S_IROTH;
+	hello_sym_link_inode.i_uid = 1000;
+	hello_sym_link_inode.i_size = 11;
+	hello_sym_link_inode.i_atime = current_time;
+	hello_sym_link_inode.i_ctime = current_time;
+	hello_sym_link_inode.i_mtime = current_time;
+	hello_sym_link_inode.i_dtime = 0;
+	hello_sym_link_inode.i_gid = 1000;
+	hello_sym_link_inode.i_links_count = 1;
+	hello_sym_link_inode.i_blocks = 1; /* These are oddly 512 blocks */
+	hello_sym_link_inode.i_block[0] = 20;
+	write_inode(fd, HELLO_INO, &hello_sym_link_inode);
 	
 }
 
