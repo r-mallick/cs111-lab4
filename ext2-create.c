@@ -436,7 +436,7 @@ void write_inode_table(int fd) {
 	hello_sym_link_inode.i_links_count = 1;
 	hello_sym_link_inode.i_blocks = 2; /* These are oddly 512 blocks */
 	hello_sym_link_inode.i_block[0] = 18;
-	write_inode(fd, EXT2_GOOD_OLD_FIRST_INO, &hello_sym_link_inode);
+	write_inode(fd, 20, &hello_sym_link_inode);
 
 }
 
