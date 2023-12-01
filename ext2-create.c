@@ -474,7 +474,7 @@ void write_root_dir_block(int fd)
 	bytes_remaining -= hello_world_entry.rec_len;
 
 	struct ext2_dir_entry hello_sym_link_entry = {0};
-	dir_entry_set(hello_sym_link_entry, HELLO_INO, "lost+found");
+	dir_entry_set(hello_sym_link_entry, HELLO_INO, "hello");
 	dir_entry_write(hello_sym_link_entry, fd);
 
 	bytes_remaining -= hello_sym_link_entry.rec_len;
