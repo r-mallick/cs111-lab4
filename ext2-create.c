@@ -436,8 +436,8 @@ void write_inode_table(int fd) {
 	hello_sym_link_inode.i_links_count = 1;
 	hello_sym_link_inode.i_blocks = 0; /* These are oddly 512 blocks */
 
-	char directory[] = "hello-world";
-	memcpy(hello_sym_link_inode.i_block, directory, 11);
+	//char directory[] = "hello-world";
+	memcpy(hello_sym_link_inode.i_block, "hello-world", 11);
 	write_inode(fd, HELLO_INO, &hello_sym_link_inode);
 
 }
