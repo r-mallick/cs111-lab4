@@ -421,7 +421,7 @@ void write_inode_table(int fd) {
 
 	// inode for hello symbolic link
 	struct ext2_inode hello_sym_link_inode = {0};
-	hello_sym_link_inode.i_mode = EXT2_S_IFREG
+	hello_sym_link_inode.i_mode = EXT2_S_IFLNK
 	                              | EXT2_S_IRUSR
 	                              | EXT2_S_IWUSR
 	                              | EXT2_S_IRGRP
@@ -437,7 +437,7 @@ void write_inode_table(int fd) {
 	hello_sym_link_inode.i_blocks = 0; /* These are oddly 512 blocks */
 
 	//char directory[] = "hello-world";
-	strncpy(hello_sym_link_inode.i_block, "hello-world", 11);
+	memcpy(hello_sym_link_inode.i_block, "hello-world", 11);
 	write_inode(fd, HELLO_INO, &hello_sym_link_inode);
 
 }
