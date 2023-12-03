@@ -525,7 +525,7 @@ void write_hello_world_file_block(int fd)
 	ssize_t bytes_remaining = BLOCK_SIZE;
 
 	// Data to be written
-    const char *data = "Hello, world!\n";
+    const char *data = "Hello world\n";
 	bytes_remaining -= strlen(data);
 
     // Writing to the file descriptor
