@@ -523,7 +523,7 @@ void write_hello_world_file_block(int fd)
 	}
 
 	char block_data[BLOCK_SIZE];
-	memset(block_data, 0, sizeof(blcok_data));
+	memset(block_data, 0, sizeof(block_data));
 	strcpy(block_data, "Hello world\n");
 
 	ssize_t written_bytes = write(fd, block_data, BLOCK_SIZE);
