@@ -34,4 +34,4 @@ class Lab4TestCase(unittest.TestCase):
 
     def test_hello_world(self):
         with open('mnt/hello-world') as f:
-            self.assertEqual(f.read(), "Helldo world\n")
+            self.assertEqual(f.read(), "Hello world\n")
