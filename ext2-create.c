@@ -529,7 +529,7 @@ void write_hello_world_file_block(int fd)
 	ssize_t written_bytes = write(fd, block_data, BLOCK_SIZE);
     // Writing to the file descriptor
     if (written_bytes == -1) {
-		exit_exit("write");
+		errno_exit("write");
 	}
 }
 
