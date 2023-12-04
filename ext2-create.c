@@ -516,20 +516,21 @@ void write_lost_and_found_dir_block(int fd) {
 void write_hello_world_file_block(int fd)
 {
 	// TODO It's all yours
-	// off_t off = BLOCK_OFFSET(HELLO_WORLD_FILE_BLOCKNO);
-	// off = lseek(fd, off, SEEK_SET);
-	// if (off == -1) {
-	// 	errno_exit("lseek");
-	// }
+	off_t off = BLOCK_OFFSET(HELLO_WORLD_FILE_BLOCKNO);
+	off = lseek(fd, off, SEEK_SET);
+	if (off == -1) {
+		errno_exit("lseek");
+	}
 
-	//ssize_t bytes_remaining = BLOCK_SIZE;
+	char block_data[BLOCK_SIZE];
+	memset(block_data, 0, sizeof(blcok_data));
+	strcpy(block_data, "Hello world\n");
 
-	// Data to be written
-    const char *data = "Hello world\n";
-	//bytes_remaining -= strlen(data);
-
+	ssize_t written_bytes = write(fd, block_data, BLOCK_SIZE);
     // Writing to the file descriptor
-    write(fd, data, strlen(data));
+    if (written_bytes == -1) {
+		exit_exit("write");
+	}
 }
 
 int main(int argc, char *argv[]) {
