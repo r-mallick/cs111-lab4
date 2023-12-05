@@ -36,7 +36,9 @@ total 7
  11 drwxr-xr-x 2    0    0 1024 Dec   3 21:01 lost+found
 ```
 
-Note that metadata about the `..` directory as well as the timestamps will vary per user.
+Note 1: Metadata about the `..` directory as well as the timestamps will vary per user.
+
+Note 2: To dump the file system information or check that the filesystem is correct, run `dumpe2fs cs111-base.img` and `fsck.ext2 cs111-base.img` respectively.
 
 ## Cleaning up
 
